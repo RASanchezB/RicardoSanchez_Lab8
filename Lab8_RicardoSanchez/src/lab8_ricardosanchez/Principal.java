@@ -870,10 +870,16 @@ public class Principal extends javax.swing.JFrame {
         modelo2.addElement(c);
         modelo3.addElement(c);
         
-
-        DefaultTreeModel modelo = (DefaultTreeModel) jt_Contactos.getModel();
-        modelo.getRoot();
-
+        db.conectar();
+        try {
+            db.query.execute("INSERT INTO Contactos"
+                    + "(Nombre,Edad,Numero,Correo,Direccion)"
+                    + "VALUES ('" + Nombre + "','" + Numero + "','" + Correo + "','" + Direccion + "','" + Genero + "')");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.desconectar();
+        
         tf_NombreC.setText("");
         tf_EdadC.setText("");
         tf_NumeroC.setText("");
@@ -979,7 +985,7 @@ public class Principal extends javax.swing.JFrame {
 
         db.conectar();
         try {
-            db.query.execute("INSERT INTO Contactos"
+            db.query.execute("INSERT INTO Mensajes"
                     + "(Emisor,Receptor,Mensaje)"
                     + "VALUES ('" + Yo + "','" + c.getNombre() + "','" + mensaje + "','" + fecha + "')");
         } catch (Exception e) {
@@ -987,6 +993,8 @@ public class Principal extends javax.swing.JFrame {
         }
         db.desconectar();
         
+        ta_Mensaje.setText("");
+        JOptionPane.showMessageDialog(this, "Mensaje Enviado");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
